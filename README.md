@@ -1,4 +1,3 @@
-```markdown
 # PickMe Frontend
 
 Фронтенд для социальной сети PickMe.
