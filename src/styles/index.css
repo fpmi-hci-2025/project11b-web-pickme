@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background-light text-text-primary font-sans;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg border-2 transition-all duration-200 font-medium;
+  }
+  
+  .btn-primary {
+    @apply bg-background-light border-primary-pink text-text-primary
+           hover:bg-primary-soft hover:border-primary-pink
+           active:bg-primary-pink active:border-primary-pink active:text-white;
+  }
+  
+  .btn-filled {
+    @apply bg-primary-pink border-primary-pink text-white
+           hover:bg-primary-soft
+           active:bg-primary-pink;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent border-primary-pink text-primary-pink
+           hover:bg-primary-pink hover:text-white;
+  }
+  
+  .input {
+    @apply w-full px-4 py-2 rounded-lg border-2 border-primary-soft
+           focus:border-primary-pink focus:outline-none
+           bg-white transition-colors;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-primary-soft/30 p-4;
+  }
+  
+  .avatar {
+    @apply rounded-full object-cover bg-primary-soft;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFF0F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #EBA0C5;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #EF79B4;
+}
