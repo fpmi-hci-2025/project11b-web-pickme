@@ -8,8 +8,6 @@ export default function PostList({ fetchPosts }) {
   const [isLoading, setIsLoading] = useState(false)
 
   const loadPosts = useCallback(async (pageNum) => {
-    if (isLoading) return
-    
     setIsLoading(true)
     try {
       const data = await fetchPosts(pageNum)
@@ -24,11 +22,11 @@ export default function PostList({ fetchPosts }) {
     } finally {
       setIsLoading(false)
     }
-  }, [fetchPosts, isLoading])
+  }, [fetchPosts])
 
   useEffect(() => {
     loadPosts(1)
-  }, [])
+  }, [loadPosts])
 
   const handleLoadMore = () => {
     if (hasMore && !isLoading) {

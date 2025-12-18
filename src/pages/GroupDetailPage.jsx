@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { groupService } from '../services/groups'
@@ -23,11 +23,7 @@ export default function GroupDetailPage() {
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm()
 
-  useEffect(() => {
-    loadGroupData()
-  }, [groupId])
-
-  const loadGroupData = async () => {
+  const loadGroupData = useCallback(async () => {
     try {
       const [groupData, membersData] = await Promise.all([
         groupService.getGroup(groupId),
@@ -42,7 +38,11 @@ export default function GroupDetailPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [groupId, navigate, setValue])
+
+  useEffect(() => {
+    loadGroupData()
+  }, [loadGroupData])
 
   const handleSearch = async () => {
     if (searchQuery.length < 2) return
