@@ -82,8 +82,8 @@ export default function PostDetailPage() {
     navigate('/')
   }
 
-  const handleLikeUpdate = (postId, likesCount, isLiked) => {
-    setPost(prev => ({ ...prev, likes_count: likesCount, is_liked: isLiked }))
+  const handleLikeUpdate = (postId, likesCount, isLiked, likedBy) => {
+    setPost(prev => ({ ...prev, likes_count: likesCount, is_liked: isLiked, liked_by: likedBy }))
   }
 
   if (isLoading) {

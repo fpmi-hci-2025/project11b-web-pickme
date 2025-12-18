@@ -39,9 +39,9 @@ export default function PostList({ fetchPosts }) {
     setPosts(prev => prev.filter(p => p.id !== postId))
   }
 
-  const handleLikeUpdate = (postId, likesCount, isLiked) => {
+  const handleLikeUpdate = (postId, likesCount, isLiked, likedBy) => {
     setPosts(prev => prev.map(p =>
-      p.id === postId ? { ...p, likes_count: likesCount, is_liked: isLiked } : p
+      p.id === postId ? { ...p, likes_count: likesCount, is_liked: isLiked, liked_by: likedBy } : p
     ))
   }
 

@@ -1,3 +1,11 @@
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8000/api').replace(/\/api$/, '')
+
+function getAvatarUrl(src) {
+  if (!src) return '/default-avatar.svg'
+  if (src.startsWith('http://') || src.startsWith('https://')) return src
+  return `${API_BASE_URL}${src}`
+}
+
 export default function Avatar({ src, alt, size = 'md', className = '' }) {
   const sizes = {
     xs: 'w-6 h-6',
@@ -9,7 +17,7 @@ export default function Avatar({ src, alt, size = 'md', className = '' }) {
 
   return (
     <img
-      src={src || '/default-avatar.svg'}
+      src={getAvatarUrl(src)}
       alt={alt}
       className={`avatar ${sizes[size]} ${className}`}
       onError={(e) => {
