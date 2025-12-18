@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': {'max': '379px'},
+      },
       colors: {
         primary: {
           pink: '#EF79B4',

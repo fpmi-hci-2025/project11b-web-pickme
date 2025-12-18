@@ -93,13 +93,13 @@ export default function MainLayout() {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex flex-col items-center py-2 px-4 ${
+                `flex flex-col items-center py-2 px-3 xs:px-2 ${
                   isActive ? 'text-primary-pink' : 'text-text-secondary'
                 }`
               }
             >
-              <i className={`fas ${item.icon} text-xl`}></i>
-              <span className="text-xs mt-1">{item.label}</span>
+              <i className={`fas ${item.icon} text-xl xs:text-lg`}></i>
+              <span className="text-xs mt-1 xs:hidden">{item.label}</span>
             </NavLink>
           ))}
         </div>
