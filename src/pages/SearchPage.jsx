@@ -35,7 +35,7 @@ export default function SearchPage() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Введите имя или ник"
-          className="mb-0 flex-1"
+          wrapperClassName="mb-0 flex-1"
           onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
         />
         <Button

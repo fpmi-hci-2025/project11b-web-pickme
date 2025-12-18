@@ -1,8 +1,9 @@
 import { forwardRef } from 'react'
 
-const Input = forwardRef(({ label, error, className = '', ...props }, ref) => {
+const Input = forwardRef(({ label, error, className = '', wrapperClassName, ...props }, ref) => {
+  const defaultWrapperClass = wrapperClassName === undefined ? 'mb-4' : wrapperClassName
   return (
-    <div className="mb-4">
+    <div className={defaultWrapperClass}>
       {label && (
         <label className="block text-body2 text-text-primary mb-1 font-medium">
           {label}
