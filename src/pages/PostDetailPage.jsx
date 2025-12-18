@@ -82,6 +82,10 @@ export default function PostDetailPage() {
     navigate('/')
   }
 
+  const handleLikeUpdate = (postId, likesCount, isLiked) => {
+    setPost(prev => ({ ...prev, likes_count: likesCount, is_liked: isLiked }))
+  }
+
   if (isLoading) {
     return (
       <div className="flex justify-center py-8">
@@ -120,7 +124,7 @@ export default function PostDetailPage() {
           )}
         </div>
         
-        <PostCard post={post} onDelete={handleDelete} />
+        <PostCard post={post} onDelete={handleDelete} onLikeUpdate={handleLikeUpdate} />
       </div>
     )
   }

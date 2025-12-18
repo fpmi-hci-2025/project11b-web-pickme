@@ -18,7 +18,7 @@ export const postService = {
 
   async createPost(data) {
     const formData = new FormData()
-    
+
     Object.keys(data).forEach(key => {
       if (key === 'audience_groups') {
         data[key].forEach(groupId => {
@@ -30,7 +30,7 @@ export const postService = {
         formData.append(key, data[key])
       }
     })
-    
+
     const response = await api.post('/posts/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -46,5 +46,15 @@ export const postService = {
 
   async deletePost(postId) {
     await api.delete(`/posts/${postId}/`)
+  },
+
+  async likePost(postId) {
+    const response = await api.post(`/posts/${postId}/like/`)
+    return response.data
+  },
+
+  async unlikePost(postId) {
+    const response = await api.delete(`/posts/${postId}/like/`)
+    return response.data
   },
 }

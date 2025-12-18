@@ -7,10 +7,13 @@ import { postService } from '../../services/posts'
 import Avatar from '../common/Avatar'
 import toast from 'react-hot-toast'
 
-export default function PostCard({ post, onDelete }) {
+export default function PostCard({ post, onDelete, onLikeUpdate }) {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [showMenu, setShowMenu] = useState(false)
+  const [isLiked, setIsLiked] = useState(post.is_liked || false)
+  const [likesCount, setLikesCount] = useState(post.likes_count || 0)
+  const [isLiking, setIsLiking] = useState(false)
 
   const isOwn = post.author.id === user?.id
 
@@ -25,6 +28,31 @@ export default function PostCard({ post, onDelete }) {
       }
     }
     setShowMenu(false)
+  }
+
+  const handleLike = async () => {
+    if (isLiking) return
+
+    setIsLiking(true)
+    const newIsLiked = !isLiked
+
+    setIsLiked(newIsLiked)
+    setLikesCount(prev => newIsLiked ? prev + 1 : prev - 1)
+
+    try {
+      const response = newIsLiked
+        ? await postService.likePost(post.id)
+        : await postService.unlikePost(post.id)
+
+      setLikesCount(response.likes_count)
+      onLikeUpdate?.(post.id, response.likes_count, newIsLiked)
+    } catch (error) {
+      setIsLiked(!newIsLiked)
+      setLikesCount(prev => newIsLiked ? prev - 1 : prev + 1)
+      toast.error('Ошибка при обработке лайка')
+    } finally {
+      setIsLiking(false)
+    }
   }
 
   const getAudienceIcon = () => {
@@ -143,9 +171,24 @@ export default function PostCard({ post, onDelete }) {
       </div>
       
       <div className="mt-4 pt-4 border-t border-primary-soft/30 flex items-center justify-between text-body2 text-text-secondary">
-        <div className="flex items-center gap-2">
-          <i className={`fas ${getAudienceIcon()}`}></i>
-          <span>{getAudienceLabel()}</span>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleLike}
+            disabled={isLiking}
+            className={`flex items-center gap-2 transition-all duration-200 hover:scale-105 active:scale-95 ${
+              isLiked ? 'text-primary-pink' : 'hover:text-primary-pink'
+            }`}
+          >
+            <i className={`${isLiked ? 'fas' : 'far'} fa-heart text-lg ${
+              isLiking ? 'animate-pulse' : ''
+            } ${isLiked ? 'animate-like' : ''}`}></i>
+            <span className="font-medium">{likesCount}</span>
+          </button>
+
+          <div className="flex items-center gap-2">
+            <i className={`fas ${getAudienceIcon()}`}></i>
+            <span>{getAudienceLabel()}</span>
+          </div>
         </div>
         <time>
           {formatDistanceToNow(new Date(post.created_at), {

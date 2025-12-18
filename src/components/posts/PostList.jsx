@@ -39,6 +39,12 @@ export default function PostList({ fetchPosts }) {
     setPosts(prev => prev.filter(p => p.id !== postId))
   }
 
+  const handleLikeUpdate = (postId, likesCount, isLiked) => {
+    setPosts(prev => prev.map(p =>
+      p.id === postId ? { ...p, likes_count: likesCount, is_liked: isLiked } : p
+    ))
+  }
+
   if (isLoading && posts.length === 0) {
     return (
       <div className="flex justify-center py-8">
@@ -59,7 +65,12 @@ export default function PostList({ fetchPosts }) {
   return (
     <div>
       {posts.map(post => (
-        <PostCard key={post.id} post={post} onDelete={handleDelete} />
+        <PostCard
+          key={post.id}
+          post={post}
+          onDelete={handleDelete}
+          onLikeUpdate={handleLikeUpdate}
+        />
       ))}
       
       {hasMore && (
