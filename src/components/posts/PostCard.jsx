@@ -127,7 +127,7 @@ export default function PostCard({ post, onDelete, onLikeUpdate }) {
                     className="w-full px-4 py-2 text-left hover:bg-background-light text-sm"
                   >
                     <i className="fas fa-edit mr-2"></i>
-                    Редактировать
+                    {post.content_type === 'text' ? 'Редактировать' : 'Редактировать текст'}
                   </button>
                   <button
                     onClick={handleDelete}
